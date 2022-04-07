@@ -21,6 +21,18 @@ class InvertedResidual(nn.Module):
 				hidden_dim = int(round(inp*expand_ratio))
 				self.use_res_connect = self.stride ==1 and inp==oup  #1*1 pw, increase the channel
 				layers = []
-				
-		
+				if expand_ratio !=1:
+				    layers.append(ConvBNReLU(inp, hidden_dim,kernel_size=1)
+				layers.extend([
+				    ConvBNReLu6(hidden_dim,hidden_dim,stride=stride,groups= hidden_dim),
+				    nn.conv2d(hidden_dim,oup,1,1,0)
+				    nn.BatchNorm2d(oup)
+				    ])
+				self.conv = nn.Sequential(*layers)
+    def forward(self,x):
+        if self.use_res_connect:
+            return self.conv(x)+x
+        else:
+	    return self.conv(X)
+    
 				
