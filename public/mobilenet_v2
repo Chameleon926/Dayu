@@ -1,0 +1,26 @@
+#Mobilenet_v2.0--python3.6
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class ConvBNReLu6(nn.Sequential):
+    def__init__(self,inp,oup,kernel_size=3,stride=1,groups=1):  # initialize the parameters of the conv2d so that it's convenient to change the way of convolution
+		    padding = (kernel_size -1)//2
+				super(ConvBNReLu6,self).__init__(
+				nn.Conv2d(inp,oup,kernel_size,stride,padding,groups = groups, bias=False)
+				nn.BatchNorm2d(oup,eps=1e-5)
+				nn.ReLU6(inplace=True)
+				)
+class InvertedResidual(nn.Module):
+    def __init__(self,inp,oup,stride,expand_ratio):
+        super(InvertedResidual,self).__init__()
+				self.stride = stride
+				assert stride in [1,2]
+				
+				hidden_dim = int(round(inp*expand_ratio))
+				self.use_res_connect = self.stride ==1 and inp==oup  #1*1 pw, increase the channel
+				layers = []
+				
+		
+				
