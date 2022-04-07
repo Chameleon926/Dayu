@@ -3,6 +3,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torchvision.models.utils import load_state_dict_from_url
 
 class ConvBNReLu6(nn.Sequential):
     def__init__(self,inp,oup,kernel_size=3,stride=1,groups=1):  # initialize the parameters of the conv2d so that it's convenient to change the way of convolution
